@@ -780,11 +780,11 @@ body.client .ctl,body.client .plan{pointer-events:none}
 (function(){
   // ===== Precios y planes: cámbialos aquí =====
   var PLANES = [
-    {id:'impulso', nombre:'Impulso', precio:120000, dias:15, periodo:'por campaña de hasta 15 días', tag:'Para promos y eventos',
+    {id:'impulso', nombre:'Impulso', precio:200000, dias:15, periodo:'por campaña de hasta 15 días', tag:'Para promos y eventos',
       incluye:['Campaña de hasta 15 días','Anuncio solo en tu municipio','Mensajes directo a tu WhatsApp','Reporte al terminar la campaña']},
-    {id:'mensual', nombre:'Mensual', precio:200000, dias:30, periodo:'al mes', tag:'Para crecer cada mes', rec:true,
+    {id:'mensual', nombre:'Mensual', precio:250000, dias:30, periodo:'al mes', tag:'Para crecer cada mes', rec:true,
       incluye:['Anuncio solo en tu municipio','2 anuncios nuevos cada mes','Mensajes directo a tu WhatsApp','Reporte mensual','Soporte por WhatsApp']},
-    {id:'trimestral', nombre:'Trimestral', precio:540000, dias:90, periodo:'por 3 meses', tag:'Ahorras $60.000',
+    {id:'trimestral', nombre:'Trimestral', precio:650000, dias:90, periodo:'por 3 meses', tag:'Ahorras $100.000',
       incluye:['Todo lo del plan Mensual','3 meses de optimización continua','Precio fijo por 3 meses','Reporte mensual']}
   ];
   var IVA = 0.19;
@@ -813,7 +813,7 @@ body.client .ctl,body.client .plan{pointer-events:none}
     'Dejar de perder plata en publicidad':{t:'No perder más plata', d:'Cada peso llega a gente que de verdad puede comprarte.', i:'<path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>'}
   };
   var CLOSE_TIPS = {
-    'Precio':'Su duda era el precio. Recuérdale que equivale a menos de $7.000 al día, que no hay permanencia y que el plan Impulso le permite probar 15 días.',
+    'Precio':'Su duda era el precio. Recuérdale que equivale a menos de $9.000 al día, que no hay permanencia y que el plan Impulso le permite probar 15 días.',
     'Si de verdad funciona':'Su duda era si funciona. Ofrece el plan Impulso de 15 días para probar con poco riesgo, y recuérdale que no hay permanencia.',
     'Ya probó y no le funcionó':'Ya probó antes. Pregunta cómo lo hizo: casi siempre fue sin ubicación o sin respuesta rápida. Eso es lo que cambia aquí.',
     'Quiere pensarlo':'Quiere pensarlo. Pregunta: "¿Qué tendría que pasar para que digas que sí hoy?" y agenda el seguimiento con fecha.',
@@ -961,7 +961,7 @@ body.client .ctl,body.client .plan{pointer-events:none}
       box.appendChild(d);
     });
     var muni = S.municipio||'tu municipio';
-    var q = 'Hoy te voy a mostrar cómo lograrlo en ' + muni + ', con un plan que cuesta menos de $7.000 al día.';
+    var q = 'Hoy te voy a mostrar cómo lograrlo en ' + muni + ', con un plan que cuesta menos de $9.000 al día.';
     if(S.pautaAntes==='Promociona desde Instagram') q = 'Ya promocionas desde Instagram. Hoy te muestro cómo hacer que cada peso llegue a gente de ' + muni + '.';
     if(S.duda==='Ya probó y no le funcionó') q = 'Ya probaste y no funcionó. Hoy te muestro qué cambia cuando el anuncio es solo para ' + muni + ' y el WhatsApp responde al instante.';
     $('goalQuote').textContent = q;
