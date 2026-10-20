@@ -317,6 +317,14 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
 .empty{padding:24px 12px;color:var(--muted);font-size:15px}
 .scrim{position:fixed;inset:0;background:rgba(5,8,20,.45);z-index:15}
 
+/* client view */
+body.client .say,body.client #btnNotes,body.client #btnHistory,body.client #btnNew,body.client #btnClient,body.client #status,body.client .bottom,body.client #btnReplay,body.client .hl-edit,body.client #closeCols,body.client .presenter-only{display:none!important}
+body.client .app{grid-template-rows:auto 1fr}
+body.client .ctl,body.client .plan{pointer-events:none}
+.waitwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;min-height:58vh}
+.waitwrap .rings{max-width:220px}
+.tipbox{background:var(--sun);color:var(--sun-ink);border-radius:12px;padding:12px 16px;font-size:15px;font-weight:500}
+
 /* motion */
 @keyframes in{from{opacity:0;transform:translateY(10px)}}
 @keyframes draw{to{stroke-dashoffset:0}}
@@ -375,6 +383,7 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
     </div>
     <div class="meetname" id="meetname">Nueva reunión</div>
     <span class="status" id="status">Sin iniciar</span>
+    <button class="btn small primary" id="btnClient" type="button">Abrir vista cliente</button>
     <button class="btn small ghost" id="btnNotes" type="button" aria-pressed="true" title="Muestra u oculta tus notas antes de compartir pantalla">Notas</button>
     <button class="btn small ghost" id="btnHistory" type="button">Reuniones</button>
     <button class="btn small" id="btnNew" type="button">Nueva reunión</button>
@@ -390,6 +399,7 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
         <h1 class="h-l">Preguntas <span class="hl">iniciales</span></h1>
         <p class="lead">Hazlas en los primeros 3 minutos. Con estas respuestas se arman solos el anuncio, los números, el plan y el resumen final.</p>
       </div>
+      <div class="tipbox presenter-only"><b>Antes de compartir en Meet:</b> toca <b>Abrir vista cliente</b> y en Meet elige compartir <b>una pestaña</b>: la de la vista cliente. Esta pestaña, con tus preguntas y notas, solo la ves tú.</div>
       <div class="say"><b>Di esto</b>"Antes de mostrarte nada, quiero entender tu negocio para que todo lo que veas sea sobre ti."</div>
       <form class="panel form" id="intake" novalidate>
         <div class="field"><label for="f-contacto">Nombre del contacto</label><input id="f-contacto" name="contacto" autocomplete="off" placeholder="Ej. Laura Gómez"></div>
@@ -430,6 +440,23 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
           </div>
         </div>
       </form>
+    </section>
+
+    <!-- Espera (solo vista cliente) -->
+    <section class="slide night wait" id="waitScreen" hidden>
+      <span class="orb a"></span><span class="orb b"></span><span class="orb c"></span>
+      <div class="waitwrap">
+        <svg class="rings" viewBox="0 0 400 400" aria-hidden="true">
+          <circle class="wave" cx="200" cy="200" r="150" fill="none" stroke="#FFC22E" stroke-width="3"></circle>
+          <circle class="wave b" cx="200" cy="200" r="150" fill="none" stroke="#FFC22E" stroke-width="3"></circle>
+          <circle class="pulse" cx="200" cy="200" r="135" fill="none" stroke="#6E80FF" stroke-width="3" opacity=".5"></circle>
+          <circle cx="200" cy="200" r="70" fill="#2337FF"></circle>
+          <circle cx="200" cy="200" r="24" fill="#FFC22E"></circle>
+        </svg>
+        <div class="eyebrow">Kercana · Publicidad local</div>
+        <h1 class="h-l">Tu reunión empieza en un momento.</h1>
+        <p class="lead" style="margin:0 auto">Estamos preparando todo para mostrarte cómo se vería el anuncio de tu negocio.</p>
+      </div>
     </section>
 
     <!-- 1 Portada -->
@@ -517,7 +544,7 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
           <div class="eyebrow">Tu anuncio, en vivo</div>
           <h2 class="h-l">Así te vería alguien de <span class="hl" data-b="municipio">tu municipio</span> mientras revisa Instagram.</h2>
           <p class="lead">Es un borrador hecho con lo que me contaste. En la campaña real usamos fotos o videos de <span data-b="negocio">tu negocio</span>.</p>
-          <div class="field"><label for="f-headline">Título del anuncio (cámbialo con el cliente)</label><input id="f-headline" autocomplete="off"></div>
+          <div class="field hl-edit"><label for="f-headline">Título del anuncio (cámbialo con el cliente)</label><input id="f-headline" autocomplete="off"></div>
           <div class="row"><button type="button" class="btn small" id="btnReplay">Ver de nuevo</button></div>
           <div class="say"><b>Pregunta</b>"¿Qué le cambiarías? ¿Qué es lo que tus clientes siempre te preguntan?"</div>
         </div>
@@ -556,7 +583,7 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
             <div class="chips" role="group" aria-labelledby="l-dias2" data-single="dias">
               <button type="button" class="chip" data-v="7">7 días</button><button type="button" class="chip" data-v="15">15 días</button><button type="button" class="chip" data-v="30">1 mes</button><button type="button" class="chip" data-v="60">2 meses</button><button type="button" class="chip" data-v="90">3 meses</button>
             </div></div>
-          <div class="field"><div class="range-row"><label for="r-diario">Pauta diaria</label><output id="o-diario" for="r-diario"></output></div><input type="range" id="r-diario" min="5000" max="60000" step="1000"><span class="hint">Va directo a Meta. Muévelo junto con el cliente.</span></div>
+          <div class="field"><div class="range-row"><label for="r-diario">Pauta diaria</label><output id="o-diario" for="r-diario"></output></div><input type="range" id="r-diario" min="5000" max="60000" step="1000"><span class="hint">Va directo a Meta desde tu tarjeta.<span class="presenter-only"> Muévelo junto con el cliente.</span></span></div>
           <div class="say"><b>Di esto</b>"Estos son los promedios que normalmente se logran con este presupuesto. Al final de cada mes te entrego el reporte con tus números reales."</div>
           <p class="note" id="o-cost"></p>
           <p class="note">Promedios estimados con costos típicos de Meta en Colombia. Varían según el anuncio y el municipio.</p>
@@ -702,7 +729,7 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
         <p class="lead" id="closeLead"></p>
       </div>
       <div class="say" id="closeTip"></div>
-      <div class="cols" style="align-items:start">
+      <div class="cols" id="closeCols" style="align-items:start">
         <form class="closepanel form" id="closeForm" novalidate style="grid-template-columns:minmax(0,1fr)">
           <div class="field"><span class="lbl" id="l-res">Resultado</span>
             <div class="chips" role="group" aria-labelledby="l-res" data-single="resultado">
@@ -810,7 +837,21 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
       diario:10000, plan:'mensual', resultado:'', linkPago:false, seguimiento:'', notas:''};
   }
   var S = blank();
-  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide:not(.wait)'));
+  var CLIENT = location.hash === '#cliente';
+  if(CLIENT){ document.body.classList.add('client'); document.title = 'Kercana'; }
+  var chan = null; try{ chan = new BroadcastChannel('kercana-live'); }catch(e){}
+  var bcPending = false;
+  function broadcast(type){
+    if(CLIENT) return;
+    if(type==='state'){ if(bcPending) return; bcPending = true; requestAnimationFrame(function(){ bcPending=false; send('state'); }); return; }
+    send(type);
+  }
+  function send(type){
+    var msg = {type:type, state:S, t:Date.now()};
+    try{ chan && chan.postMessage(msg); }catch(e){}
+    try{ localStorage.setItem('kercana-live', JSON.stringify(msg)); }catch(e){}
+  }
 
   // ===== Storage: db capability, with local fallback =====
   var db = null, saveTimer = null, unsub = null;
@@ -819,7 +860,7 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
   function localList(){ try{ return JSON.parse(localStorage.getItem('kercana-meetings')||'[]'); }catch(e){ return []; } }
   function localSave(o){ try{ var l=localList().filter(function(x){return x.id!==o.id;}); l.unshift(o); localStorage.setItem('kercana-meetings',JSON.stringify(l.slice(0,100))); }catch(e){} }
   function save(now){
-    if(!S.started || S.example) return;
+    if(CLIENT || !S.started || S.example) return;
     clearTimeout(saveTimer);
     setStatus('Guardando…');
     saveTimer = setTimeout(function(){
@@ -981,6 +1022,7 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
     // chips
     document.querySelectorAll('[data-single]').forEach(function(g){ var key=g.getAttribute('data-single'); g.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed', String(String(S[key])===c.getAttribute('data-v'))); }); });
     document.querySelectorAll('[data-multi]').forEach(function(g){ var key=g.getAttribute('data-multi'); g.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed', String(S[key].indexOf(c.getAttribute('data-v'))>-1)); }); });
+    broadcast('state');
   }
   function fillIntake(){
     ['contacto','negocio','municipio','whatsapp','correo'].forEach(function(k){ $('f-'+k).value = S[k]||''; });
@@ -1029,12 +1071,15 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
   }
 
   // ===== Navigation =====
+  var shown = -1;
   function go(i){
-    if(i>0 && !S.started){ $('intakeErr').hidden=false; return; }
+    if(i>0 && !S.started && !CLIENT){ $('intakeErr').hidden=false; return; }
     i = Math.max(0, Math.min(slides.length-1, i));
-    S.slide = i;
-    slides.forEach(function(s,j){ s.hidden = j!==i; s.classList.remove('play'); });
-    void slides[i].offsetWidth; slides[i].classList.add('play');
+    S.slide = i; shown = i;
+    var useWait = CLIENT && i===0;
+    $('waitScreen').hidden = !useWait;
+    slides.forEach(function(s,j){ s.hidden = useWait || j!==i; s.classList.remove('play'); });
+    if(!useWait){ void slides[i].offsetWidth; slides[i].classList.add('play'); }
     var t = slides[i].getAttribute('data-title');
     if(t==='Números') replayNumbers();
     if(t==='Inicio') typeMuni();
@@ -1046,12 +1091,13 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
     $('btnPrev').disabled = i===0;
     $('btnNext').hidden = i===slides.length-1 || i===0;
     document.querySelectorAll('#dots button').forEach(function(d,j){ if(j===i) d.setAttribute('aria-current','step'); else d.removeAttribute('aria-current'); });
-    save();
+    save(); broadcast('state');
   }
   slides.forEach(function(s,j){ var d=document.createElement('button'); d.type='button'; d.setAttribute('aria-label', (j+1)+'. '+s.getAttribute('data-title')); d.addEventListener('click',function(){go(j);}); $('dots').appendChild(d); });
   $('btnPrev').addEventListener('click', function(){ go(S.slide-1); });
   $('btnNext').addEventListener('click', function(){ go(S.slide+1); });
   document.addEventListener('keydown', function(e){
+    if(CLIENT) return;
     var t = e.target; if(t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='SELECT')) return;
     if(!$('drawer').hidden || !$('welcome').hidden) return;
     if(e.key==='ArrowRight' || e.key==='PageDown'){ e.preventDefault(); go(S.slide+1); }
@@ -1065,7 +1111,7 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
   $('f-ticket').addEventListener('blur', function(e){ e.target.value = S.ticket? n(S.ticket):''; });
   $('f-headline').addEventListener('input', function(e){ S.headline=e.target.value; paint(); save(); });
   $('r-diario').addEventListener('input', function(e){ S.diario=+e.target.value; paint(); save(); });
-  $('btnReplay').addEventListener('click', replayFeed);
+  $('btnReplay').addEventListener('click', function(){ replayFeed(); broadcast('replay'); });
   $('f-pago').addEventListener('change', function(e){ S.linkPago=e.target.checked; paint(); save(); });
   $('f-seg').addEventListener('change', function(e){ S.seguimiento=e.target.value; save(); });
   $('f-notas').addEventListener('input', function(e){ S.notas=e.target.value; save(); });
@@ -1094,11 +1140,11 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
     if(S.resultado==='Cerró'){
       $('wName').textContent = S.negocio || '';
       $('wText').textContent = 'Tu anuncio en ' + (S.municipio||'tu municipio') + ' sale el ' + dateStr(addDays(1)) + '. Te escribimos hoy por WhatsApp con los siguientes pasos.';
-      $('welcome').hidden = false; $('btnWelcome').focus(); confetti();
+      $('welcome').hidden = false; $('btnWelcome').focus(); confetti(); send('welcome');
     }
     $('saveMsg').textContent = S.example ? 'Es un ejemplo: no se guarda.' : 'Reunión guardada.';
   });
-  $('btnWelcome').addEventListener('click', function(){ $('welcome').hidden = true; });
+  $('btnWelcome').addEventListener('click', function(){ $('welcome').hidden = true; send('welcome-close'); });
   $('btnCopy').addEventListener('click', function(){
     var txt = summaryText();
     function fallback(){ var r=document.createRange(); r.selectNodeContents($('summary')); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); $('copyMsg').textContent='Texto seleccionado: usa Copiar de tu teclado.'; }
@@ -1152,8 +1198,37 @@ input[type=range]{width:100%;accent-color:var(--sun);min-height:32px}
   $('scrim').addEventListener('click', closeDrawer);
   document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ if(!$('drawer').hidden) closeDrawer(); if(!$('welcome').hidden) $('welcome').hidden=true; } });
 
+  // ===== Client view sync =====
+  function showWelcome(){
+    $('wName').textContent = S.negocio || '';
+    $('wText').textContent = 'Tu anuncio en ' + (S.municipio||'tu municipio') + ' sale el ' + dateStr(addDays(1)) + '. Te escribimos hoy por WhatsApp con los siguientes pasos.';
+    $('welcome').hidden = false; confetti();
+  }
+  function receive(msg){
+    if(!CLIENT || !msg || !msg.state) return;
+    S = Object.assign(blank(), msg.state);
+    if(msg.type==='replay'){ replayFeed(); return; }
+    if(msg.type==='welcome'){ paint(); showWelcome(); return; }
+    if(msg.type==='welcome-close'){ $('welcome').hidden = true; return; }
+    paint();
+    if(S.slide !== shown) go(S.slide);
+  }
+  if(CLIENT){
+    if(chan) chan.onmessage = function(e){ receive(e.data); };
+    window.addEventListener('storage', function(e){ if(e.key==='kercana-live' && !chan){ try{ receive(JSON.parse(e.newValue)); }catch(err){} } });
+  }
+  $('btnClient').addEventListener('click', function(){
+    var url = location.href.split('#')[0] + '#cliente';
+    var w = null; try{ w = window.open(url, 'kercana-cliente'); }catch(e){}
+    send('state');
+    if(!w){
+      try{ navigator.clipboard.writeText(url).then(function(){ setStatus('Enlace de vista cliente copiado'); }, function(){ setStatus('Abre: ' + url); }); }catch(e){ setStatus('Abre: ' + url); }
+    }
+  });
+
   // ===== Boot =====
   fillIntake(); paint(); go(0); setStatus('Sin iniciar');
+  if(CLIENT){ try{ var last = JSON.parse(localStorage.getItem('kercana-live')||'null'); if(last && last.state){ S = Object.assign(blank(), last.state); paint(); go(S.slide||0); } }catch(e){} }
   if(window.claude && window.claude.use){
     window.claude.use('db').then(function(d){ db = d; if(db && S.started && !S.example) save(true); }).catch(function(){ db=null; });
   }
